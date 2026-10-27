@@ -8,6 +8,11 @@ export const LEVEL = {
   PitLevel1: 12,
   PitLevel2: 16,
   ForgottenTower: 20,
+  TowerCellar1: 21,
+  TowerCellar2: 22,
+  TowerCellar3: 23,
+  TowerCellar4: 24,
+  TowerCellar5: 25,
   OuterCloister: 27,
   Catacombs2: 35,
   Catacombs3: 36,
@@ -41,6 +46,7 @@ export const OBJECT = {
 export const METRICS = [
   "andariel",
   "countess",
+  "countessFull",
   "pit",
   "tristram",
   "duriel",
@@ -55,6 +61,7 @@ export const METRICS = [
 export const LABELS = {
   andariel: "Andariel",
   countess: "Forgotten Tower / Countess",
+  countessFull: "Forgotten Tower / Countess (Black Marsh → Forgotten Tower Level 5)",
   pit: "The Pit",
   tristram: "Stony → Cairn Stones / Tristram",
   duriel: "Duriel / True Tomb",
@@ -521,6 +528,34 @@ function countessDetails(game,blackWpInfo=null) {
   };
 }
 
+function countessFullDetails(game, blackWpInfo=null) {
+  const a = game.area(LEVEL.BlackMarsh);
+  const wp = blackWpInfo ?? act1OutdoorWaypoint(a);
+  const start = wp?.point ?? null;
+  if (!start) return null;
+
+  const tower = exitPoint(exitTo(a, LEVEL.ForgottenTower), start);
+  if (!tower) return null;
+
+  const entrance = isoDist(start, tower);
+  if (entrance == null) return null;
+
+  // Traversée de la tour : Forgotten Tower (20) → Tower Cellar 1..5 (21..25)
+  const chain = geometryChain(game, LEVEL.ForgottenTower, tower, [
+    LEVEL.TowerCellar1, LEVEL.TowerCellar2, LEVEL.TowerCellar3,
+    LEVEL.TowerCellar4, LEVEL.TowerCellar5
+  ]);
+  if (!chain) return null;
+
+  return {
+    score: entrance + chain.total,   // distance cumulée Black Marsh WP → Comtesse
+    entrance,
+    tower: chain.total,              // cumul interne (diagnostic)
+    waypointRoom: wp.roomIndex,
+    waypointMatchedKeys: wp.matchedKeys
+  };
+}
+
 function pitDetails(game,blackWpInfo=null) {
   const options=[];
 
@@ -869,6 +904,7 @@ function baalDetails(game,wsk2WpInfo=null) {
 const VALIDATORS = {
   andariel:g=>metricAndariel(g),
   countess:g=>countessDetails(g)?.score ?? null,
+  countessFull: g => countessFullDetails(g)?.score ?? null,
   pit:g=>pitDetails(g)?.score ?? null,
   tristram:g=>tristramDetails(g)?.score ?? null,
   duriel:g=>durielDetails(g)?.score ?? null,
@@ -878,6 +914,7 @@ const VALIDATORS = {
   threshSocket:g=>metricThresh(g),
   nihlathak:g=>nihlathakDetails(g)?.score ?? null,
   baal:g=>baalDetails(g)?.score ?? null
+  
 };
 
 
@@ -902,6 +939,7 @@ function evalSeed(seed) {
       return {valid:false,reason:"wsk2Waypoint"};
 
     const countess=countessDetails(game,blackWp);
+	const countessFull = countessFullDetails(game, blackWp);
     const pit=pitDetails(game,blackWp);
     const tristram=tristramDetails(game,stonyWp);
     const duriel=durielDetails(game);
@@ -910,6 +948,7 @@ function evalSeed(seed) {
     const baal=baalDetails(game,wsk2Wp);
 
     if (!countess) return {valid:false,reason:"countess"};
+	if (!countessFull) return {valid:false, reason:"countessFull"};
     if (!pit) return {valid:false,reason:"pit"};
     if (!tristram) return {valid:false,reason:"tristram"};
     if (!duriel) return {valid:false,reason:"duriel"};

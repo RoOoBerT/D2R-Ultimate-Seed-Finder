@@ -2,6 +2,7 @@
 const METRICS=[
   ["andariel","Andariel"],
   ["countess","Forgotten Tower / Countess"],
+  ["countessFull", "Forgotten Tower / Countess (Black Marsh → Forgotten Tower Level 5)"],
   ["pit","The Pit"],
   ["tristram","Stony → Cairn Stones / Tristram"],
   ["duriel","Duriel / True Tomb"],
@@ -340,7 +341,9 @@ function friendlyReason(reason){
     act1BlackMarshWaypoint:"Black Marsh waypoint detector did not resolve",
     act1StonyWaypoint:"Stony Field waypoint detector did not resolve",
     wsk2Waypoint:"Worldstone Keep 2 waypoint detector did not resolve",
-    countess:"Countess route unavailable",pit:"Pit route unavailable",
+    countess:"Countess route unavailable",
+	countessFull:"Countess full route unavailable",
+	pit:"Pit route unavailable",
     tristram:"Tristram route unavailable",duriel:"Duriel route unavailable",
     baal:"Baal route unavailable",exception:"Seed evaluation error"
   };
