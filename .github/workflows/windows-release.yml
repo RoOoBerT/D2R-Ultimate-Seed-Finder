@@ -28,6 +28,9 @@ jobs:
       - name: Apply libd2 compatibility patch
         run: node patch_libd2.mjs
 
+      - name: Debug Forgotten Tower chain
+        run: node debug-tower.mjs
+
       - name: Build Portable EXE
         run: npm run build:portable
 
