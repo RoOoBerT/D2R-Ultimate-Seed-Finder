@@ -540,17 +540,22 @@ function countessFullDetails(game, blackWpInfo=null) {
   const entrance = isoDist(start, tower);
   if (entrance == null) return null;
 
-  // Traversée de la tour : Forgotten Tower (20) → Tower Cellar 1..5 (21..25)
-  const chain = geometryChain(game, LEVEL.ForgottenTower, tower, [
-    LEVEL.TowerCellar1, LEVEL.TowerCellar2, LEVEL.TowerCellar3,
+  // Carte preset (zone 20) sautée : on entre directement en Tower Cellar 1
+  // par le point d'arrivée depuis la Forgotten Tower.
+  const cellar1 = game.area(LEVEL.TowerCellar1);
+  const entryCellar1 = entryFrom(cellar1, LEVEL.ForgottenTower);
+  if (!entryCellar1) return null;
+
+  const chain = geometryChain(game, LEVEL.TowerCellar1, entryCellar1, [
+    LEVEL.TowerCellar2, LEVEL.TowerCellar3,
     LEVEL.TowerCellar4, LEVEL.TowerCellar5
   ]);
   if (!chain) return null;
 
   return {
-    score: entrance + chain.total,   // distance cumulée Black Marsh WP → Comtesse
+    score: entrance + chain.total,
     entrance,
-    tower: chain.total,              // cumul interne (diagnostic)
+    tower: chain.total,
     waypointRoom: wp.roomIndex,
     waypointMatchedKeys: wp.matchedKeys
   };
