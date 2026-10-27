@@ -964,6 +964,7 @@ function evalSeed(seed) {
     const values={
       andariel:metricAndariel(game),
       countess:countess.score,
+	  countessFull:countessFull.score,
       pit:pit.score,
       tristram:tristram.score,
       duriel:duriel.score,
@@ -985,6 +986,7 @@ function evalSeed(seed) {
       metrics:values,
       details:{
         countessEntrance:countess.entrance,
+		countessFullTower:countessFull.tower,
         blackMarshWaypointRoom:blackWp.roomIndex,
         stonyFieldWaypointRoom:stonyWp.roomIndex,
         wsk2WaypointBlock:wsk2Wp.blockId,
