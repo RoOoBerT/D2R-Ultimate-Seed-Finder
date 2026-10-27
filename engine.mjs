@@ -1022,6 +1022,7 @@ function evalSeedRelaxed(seed) {
     const wsk2Wp=safe(()=>worldstone2Waypoint(game.area(LEVEL.WorldstoneKeep2)));
 
     const countess=blackWp ? safe(()=>countessDetails(game,blackWp)) : null;
+    const countessFull=blackWp ? safe(()=>countessFullDetails(game,blackWp)) : null;
     const pit=blackWp ? safe(()=>pitDetails(game,blackWp)) : null;
     const tristram=stonyWp ? safe(()=>tristramDetails(game,stonyWp)) : null;
     const duriel=safe(()=>durielDetails(game));
