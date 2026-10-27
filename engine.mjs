@@ -1034,6 +1034,7 @@ function evalSeedRelaxed(seed) {
     const values={
       andariel:safe(()=>metricAndariel(game)),
       countess:countess?.score ?? null,
+	  countessFull:countessFull?.score ?? null,
       pit:pit?.score ?? null,
       tristram:tristram?.score ?? null,
       duriel:duriel?.score ?? null,
@@ -1050,6 +1051,7 @@ function evalSeedRelaxed(seed) {
 
     const details={
       countessEntrance:countess?.entrance ?? null,
+	  countessFullTower:countessFull?.tower ?? null,
       blackMarshWaypointRoom:blackWp?.roomIndex ?? null,
       stonyFieldWaypointRoom:stonyWp?.roomIndex ?? null,
       wsk2WaypointBlock:wsk2Wp?.blockId ?? null,
