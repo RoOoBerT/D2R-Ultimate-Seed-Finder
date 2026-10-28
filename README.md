@@ -35,6 +35,7 @@ The current scanner evaluates these eleven targets:
 |---|---|---|
 | I | Andariel | Catacombs Level 2 waypoint toward deeper Catacombs / Andariel |
 | I | Forgotten Tower / Countess | Black Marsh waypoint to Forgotten Tower entrance |
+| I | Forgotten Tower / Countess (Black Marsh → Forgotten Tower Level 5) | Black Marsh waypoint to Forgotten Tower Level 5 |
 | I | The Pit | Best approach from Black Marsh or Outer Cloister |
 | I | Tristram | Stony Field waypoint to the Cairn Stones |
 | II | Duriel / True Tomb | Canyon waypoint to the true Tomb, then Tomb entry to the Orifice |
